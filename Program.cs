@@ -1,6 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
+
+var services = builder.Services;
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
+
 var app = builder.Build();
 var db = new DataService();
+
+
+
+app.UseSwagger();
 
 app.MapGet("/employees", () => {
     var emps = db.Employees.ToList();
@@ -32,4 +41,5 @@ app.MapDelete("/employees/{id}", (int id) => {
     return Results.NoContent();
 });
 
+app.UseSwaggerUI();
 app.Run();
